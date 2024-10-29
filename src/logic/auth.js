@@ -6,8 +6,8 @@ const API_KEY = config.web.api_key;
 const CLIENT_ID = config.web.client_id;
 
 /**
- * Decrypts the JSON string idToken in order to access the encrytped user information held within
- * @param {Object} token the idToken of the user
+ * Décrypte la chaîne JSON idToken pour accéder aux informations d'utilisateur chiffrées
+ * @param {Object} token l'idToken de l'utilisateur
  */
 export const parseIDToken = (token) => {
   try {
@@ -18,67 +18,37 @@ export const parseIDToken = (token) => {
 };
 
 /**
- * Signs a new user into Google, and then begins the process of storing all of their information
- * Returns an idToken, an AccessToken, and a Code, all unique to the user in a Response object
+ * Simule la connexion d'un nouvel utilisateur à Google et retourne un idToken simulé,
+ * un AccessToken, et un Code, tous uniques à l'utilisateur dans un objet Response.
  */
 export const authorizeUserHelper = (email, func) => {
-  const prompt = (email) ? 'none' : 'select_account';
-  const loginHint = (email) || 'none';
-  window.gapi.load('client:auth', () => {
-    window.gapi.auth2.authorize({
-      apiKey: API_KEY,
-      clientId: CLIENT_ID,
-      scope: SCOPE,
-      responseType: 'id_token permission code',
-      prompt,
-      login_hint: loginHint,
-      discoveryDocs: [discoveryUrl, 'https:googleapis.com/discovery/v1/apis/profile/v1/rest'],
-    }, (response) => {
-      if (response.error) {
-        console.log(response.error);
-        console.log('authorization error');
-        return;
-      }
-      const accessToken = response.access_token;
-      const idToken = response.id_token;
-      const { code } = response;
-      func(accessToken, idToken, code);
-    });
-  });
+  console.log("Skipping Google API authorization for testing.");
+  
+  // Simuler un accès et ID token
+  const accessToken = "test_access_token";
+  const idToken = "test_id_token";
+  const code = "test_code";
+
+  // Appeler directement `func` avec les valeurs simulées
+  func(accessToken, idToken, code);
 };
 
+/**
+ * Simule le chargement de l'API Google Drive sans appels réels à l'API.
+ */
 export const loadAuth = (email, func) => {
-  window.gapi.client.load('drive', 'v3').then(() => {
-    window.gapi.auth2.authorize({
-      apiKey: API_KEY,
-      clientId: CLIENT_ID,
-      scope: SCOPE,
-      prompt: 'none',
-      login_hint: email,
-      discoveryDocs: [discoveryUrl],
-    }, (response) => {
-      if (response.error) {
-        console.log(response.error);
-      }
-      func();
-    });
-  });
+  console.log("Skipping Google API drive loading for testing.");
+  
+  // Simuler un succès et appeler `func`
+  func();
 };
 
+/**
+ * Simule le chargement de l'API Google Drive avec paramètres sans appels réels à l'API.
+ */
 export const loadAuthParam = (email, func) => (...args) => {
-  window.gapi.client.load('drive', 'v3').then(() => {
-    window.gapi.auth2.authorize({
-      apiKey: API_KEY,
-      clientId: CLIENT_ID,
-      scope: SCOPE,
-      prompt: 'none',
-      login_hint: email,
-      discoveryDocs: [discoveryUrl],
-    }, (response) => {
-      if (response.error) {
-        console.log(response.error);
-      }
-      func.call(this, ...args);
-    });
-  });
+  console.log("Skipping Google API drive loading with parameters for testing.");
+  
+  // Appeler `func` directement avec les arguments
+  func.call(this, ...args);
 };
