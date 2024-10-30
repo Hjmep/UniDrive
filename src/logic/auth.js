@@ -4,6 +4,7 @@ const SCOPE = 'profile email openid https://www.googleapis.com/auth/drive https:
 const discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';
 const API_KEY = config.web.api_key;
 const CLIENT_ID = config.web.client_id;
+const CLIENT_SECRET = config.web.client_secret;
 
 /**
  * Decrypts the JSON string idToken in order to access the encrytped user information held within
