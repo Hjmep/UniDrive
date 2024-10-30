@@ -46,10 +46,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    //const script = document.createElement('script');
-    //script.onload = this.handleClientLoad;
-    //script.src = 'https://apis.google.com/js/api.js';
-    //document.body.appendChild(script);
+    const script = document.createElement('script');
+    script.onload = this.handleClientLoad;
+    script.src = 'https://apis.google.com/js/api.js';
+    document.body.appendChild(script);
     setTimeout(() => {
       this.startUp();
     }, 1000);
@@ -59,7 +59,7 @@ class App extends Component {
   }
 
   handleClientLoad = () => {
-    //window.gapi.load('client:auth');
+    window.gapi.load('client:auth');
   }
 
   /**
